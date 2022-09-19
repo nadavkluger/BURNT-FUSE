@@ -7,7 +7,8 @@
 /*
 TODO:
 # Add size to ls
-# Add date last change
+# Add date last change and created
+# Add tests
 # Add command history with arrows
 */
 
@@ -50,7 +51,7 @@ int main()
             {
                 tmp = g_pCurr;
 
-                if (findFsObj(path, &tmp) && tmp->isDir)
+                if (find(path, &tmp) && tmp->isDir)
                 {
                     g_pCurr = tmp;
                 }
@@ -80,7 +81,7 @@ int main()
 
                 removeSpaces(path);
 
-                if (findFsObj(path, &tmp))
+                if (find(path, &tmp))
                 {
                     if (tmp->isDir)
                     {
@@ -103,7 +104,7 @@ int main()
             }
             else if (IS_EQUALS(command, "cat"))
             {
-                if (findFsObj(path, &tmp))
+                if (find(path, &tmp))
                 {
                     if (tmp->isDir)
                     {

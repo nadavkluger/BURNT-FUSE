@@ -3,7 +3,7 @@
 fsObj g_root = {"/", true, NULL, NULL, NULL};
 fsObj *g_pCurr = &g_root;
 
-bool findDirInDir(fsObj **dir, char *name);
+bool findObjInDir(fsObj **dir, char *name);
 void parsePathStrToArr(char *path, char ***arr, int *length);
 void removeDir(char *path, fsObj *pLocation);
 
@@ -42,7 +42,7 @@ void printPath()
 void listDir(char *path)
 {
     fsObj *tmp;
-    if (findFsObj(path, &tmp) && tmp->isDir)
+    if (find(path, &tmp) && tmp->isDir)
     {
         tmp = (fsObj *)tmp->content;
 
@@ -94,6 +94,7 @@ void removeDir(char *path, fsObj *pLocation)
 
     free(concatedPath);
 }
+
 void removePath(char *path)
 {
     fsObj *pLocation;
@@ -106,7 +107,7 @@ void removePath(char *path)
         printf("Cannot delete an open directory\n");
         return;
     }
-    if (findFsObj(path, &pLocation) && pLocation->isDir)
+    if (find(path, &pLocation) && pLocation->isDir)
     {
         if (strstr(path, "..") != 0)
         {
@@ -163,7 +164,7 @@ void makeFsObj(char *path, bool isDir)
     strncpy(realPath, path, pathLen - objNameLen);
     realPath[pathLen - objNameLen] = '\0';
 
-    if (findFsObj(realPath, &parent) && parent->isDir)
+    if (find(realPath, &parent) && parent->isDir)
     {
         tmp = ((fsObj *)(parent->content));
 
@@ -302,7 +303,8 @@ bool findObjInDir(fsObj **dir, char *name)
         return false;
     }
 }
-bool findFsObj(char *path, fsObj **dir)
+
+bool find(char *path, fsObj **dir)
 {
     char subPath[MAX_NAME_LEN];
     char *pSep;

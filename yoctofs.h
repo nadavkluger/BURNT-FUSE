@@ -17,7 +17,7 @@ typedef struct FileSystemObject {
 } fsObj;
 
 void printPath();
-bool findFsObj(char *path, fsObj **out);
+bool find(char *path, fsObj **out);
 void listDir(char *path);
 void makeFsObj(char *path, bool isDir);
 void removePath(char *path);
